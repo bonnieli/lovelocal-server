@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
+# DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = False
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 
@@ -76,18 +77,15 @@ WSGI_APPLICATION = 'carebackend.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'HOST': os.environ.get("DB_HOST", "db"),
-        # 'HOST': 'localhost',
-        'HOST': 'db',
+        'HOST': os.environ.get("DB_HOST", "localhost"),
         'PORT': os.environ.get("DB_PORT", 5432),
         'OPTIONS': {
             'options': '-c search_path=django,supportlocal,public'
         },
-        'USER': 'postgres',
-        'PASSWORD': 'example',
-        'NAME': 'postgres'
+        'USER': os.environ.get("DB_USER", "postgres"),
+        'PASSWORD': os.environ.get("DB_PSWD", ""),
+        'NAME': os.environ.get("DB_NAME", "postgres")
     }
 }
 
@@ -143,8 +141,12 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/django-static/'
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), './django-static/')
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
 
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 465

@@ -15,22 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-# from places.views import (
-#     neighborhood_detail,
-#     place_detail,
-#     submit_email_for_place,
-#     submit_gift_card_link,
-#     submit_new_place,
-#     test
-# )
-from places.views import (test, neighborhood_detail)
+from django.conf.urls import url
+from places.views import (test, neighborhood_detail, check_url,
+                          FrontendAppView)
+
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    # path('api/places/detail', place_detail),
     path('api/places/by_neighborhood', neighborhood_detail),
-    # path('api/places/submit_email', submit_email_for_place),
-    # path('api/places/submit_gift_card_link', submit_gift_card_link),
-    # path('api/places/submit_new_place', submit_new_place),
-    path('api/test', test)
+    path('api/test', test),
+    path('url_checker', check_url),
+    url(r'^', FrontendAppView.as_view())
 ]

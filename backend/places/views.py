@@ -5,18 +5,20 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.http import HttpResponse
 
 
-# from django.contrib.gis.measure import Distance
+from django.views.generic import View
+from django.views.decorators.csrf import csrf_exempt
+
+from django.conf import settings
+
+import logging
+import urllib.request
+import os
+
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import D
-# from places.models import (
-#     EmailSubscription,
-#     Neighborhood,
-#     Place,
-#     SubmittedGiftCardLink,
-#     SubmittedPlace
-# )
 from places.models import (Place)
 
 
@@ -42,114 +44,39 @@ def neighborhood_detail(request):
     })
 
 
-# @csrf_protect
-# def place_detail(request):
-#     place_id = request.GET.get('place_id')
-#     if not place_id:
-#         return JsonResponse({'error': 'missing place ID'})
-#     try:
-#         place = Place.objects.get(place_id=place_id)
-#     except Place.DoesNotExist:
-#         return JsonResponse({'error': 'can\'t find place with that ID'})
-
-#     nearby = []
-#     if place.geom:
-#         nearby = Place.objects.filter(
-#             Q(geom__distance_lt=(place.geom, D(m=2500))) & (
-#                 Q(gift_card_url__isnull=False) | Q(email_contact__isnull=False))
-#         ).exclude(
-#             place_id=place_id
-#         ).annotate(
-#             distance=Distance('geom', place.geom)
-#         ).order_by('distance')[0:9]
-
-#     return JsonResponse({'place': place.to_json(), 'suggestedPlaces': [x.to_json() for x in nearby]})
+@csrf_exempt
+def check_url(request):
+    try:
+        url_status = urllib.request.urlopen(request.body.decode("utf-8")).getcode()
+    except:
+        return HttpResponse(":( Url is Not Working")
+    if (url_status == 200):
+        return HttpResponse("Yey! URL is Working")
+    return HttpResponse(":( Url is Not Working")
 
 
-# @csrf_exempt
-# def submit_email_for_place(request):
-#     data = json.loads(request.body)
-#     place_id = data.get('place_id')
-#     email = data.get('email')
-#     if not (place_id and email):
-#         return JsonResponse({'error': 'missing parameters'}, status=400)
+class FrontendAppView(View):
+    """
+    Serves the compiled frontend entry point (only works if you have run `yarn
+    run build`).
+    """
 
-#     try:
-#         place = Place.objects.get(place_id=place_id)
-#     except Place.DoesNotExist:
-#         return JsonResponse({'error': 'bad place ID'}, status=400)
-#     try:
-#         subscription = EmailSubscription.objects.get(
-#             email=email,
-#             place=place
-#         )
-#     except EmailSubscription.DoesNotExist:
-#         subscription = EmailSubscription(
-#             email=email,
-#             place=place
-#         )
-#         try:
-#             subscription.full_clean()
-#         except ValidationError:
-#             return JsonResponse({'error': 'bad email'}, status=400)
-#         subscription.save()
-#     return JsonResponse({'status': 'ok'})
-
-
-# @csrf_exempt
-# def submit_gift_card_link(request):
-#     data = json.loads(request.body)
-#     place_id = data.get('place_id')
-#     gift_card_link = data.get('gift_card_url')
-#     if not (place_id and gift_card_link):
-#         return JsonResponse({'error': 'missing parameters'}, status=400)
-
-#     try:
-#         URLValidator()(gift_card_link)
-#     except ValidationError:
-#         return JsonResponse({'error': 'bad url'}, status=400)
-#     try:
-#         place = Place.objects.get(place_id=place_id)
-#     except Place.DoesNotExist:
-#         return JsonResponse({'error': 'bad place ID'}, status=400)
-#     submission = SubmittedGiftCardLink.objects.create(
-#         link=gift_card_link,
-#         place=place
-#     )
-#     submission.save()
-#     return JsonResponse({'status': 'ok'})
-
-
-# @csrf_exempt
-# def submit_new_place(request):
-#     data = json.loads(request.body)
-#     gift_card_link = data.get('gift_card_url')
-#     email = data.get('email')
-#     if not (data.get('place_details')):
-#         return JsonResponse({'error': 'missing parameters'}, status=400)
-
-#     # Hacky way if people enter incomplete URLs
-#     def add_url_prefix(url):
-#         if url and not url.startswith('http'):
-#             return 'http://%s/' % url
-#         return url
-#     gift_card_link = add_url_prefix(gift_card_link)
-
-#     place_data = data['place_details']
-#     try:
-#         URLValidator()(gift_card_link) if gift_card_link else None
-#     except ValidationError:
-#         return JsonResponse({'error': "Gift card link isn't valid"}, status=400)
-
-#     sub = SubmittedPlace(
-#         place_id=place_data['place_id'],
-#         place_name=place_data['structured_formatting']['main_text'],
-#         place_rough_location=place_data['structured_formatting']['secondary_text'],
-#         email=email,
-#         gift_card_url=gift_card_link
-#     )
-#     sub.save()
-#     return JsonResponse({'status': 'ok'})
+    def get(self, request):
+        print(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html'))
+        try:
+            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            print("oops")
+            logging.exception('Production build of app not found')
+            return HttpResponse(
+                """
+                    This URL is only used when you have built the production
+                    version of the app. Visit http://localhost:3000/ instead, or
+                    run `yarn run build` to test the production version.
+                    """,
+                status=501,
+            )
 
 
 @csrf_exempt

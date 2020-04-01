@@ -1,4 +1,14 @@
-runtime: python37
+runtime: custom
+#python
+env: flex
+entrypoint: gunicorn -b :$PORT mysite.wsgi
+
+beta_settings:
+    cloud_sql_instances: "<your-db-instance-identifying-string>"
+
+runtime_config:
+  python_version: 3
+
 handlers:
 # This configures Google App Engine to serve the files in the app's static
 # directory.

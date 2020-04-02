@@ -139,14 +139,16 @@ dmypy.json
 cython_debug/
 
 # static files generated from Django application using `collectstatic`
-media
-static
+# media
+# static
 
 postgres-data
-django-static
+# django-static
 ingest/
 .DS_Store
 
 private_keys.py
 
 client/node_modules/
+
+backend/app.yaml

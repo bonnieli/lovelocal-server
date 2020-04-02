@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'places'
 ]
 
@@ -142,12 +143,23 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+# STATIC_URL = 'https://storage.googleapis.com/lovelocals-272900.appspot.com/admin/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+print("static url", STATIC_URL)
+# collectstatic directory (located OUTSIDE the base directory)
+# TODO: configure the name and path to your static bucket directory (where collectstatic will copy to)
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'STATIC-BUCKET-NAME')
+
 REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 ]
+
+print("directory", STATICFILES_DIRS)
 
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 465

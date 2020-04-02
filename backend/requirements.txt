@@ -5,7 +5,9 @@ certifi==2019.11.28
 chardet==3.0.4
 click==7.1.1
 decorator==4.4.2
-Django==3.0.4
+Django==2.1.8
+django-rest-framework==0.1.0
+djangorestframework==3.11.0
 Flask==1.1.1
 geos==0.2.2
 gunicorn==19.9.0
@@ -24,8 +26,8 @@ pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==7.0.0
 prompt-toolkit==3.0.5
-psycopg2==2.7.3
-# psycopg2-binary==2.8.4
+psycopg2==2.8.4
+psycopg2-binary==2.8.4
 ptyprocess==0.6.0
 Pygments==2.6.1
 python-dateutil==2.8.1

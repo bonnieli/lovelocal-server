@@ -62,6 +62,7 @@ class FrontendAppView(View):
     """
 
     def get(self, request):
+        print("getting here...")
         print(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html'))
         try:
             with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:

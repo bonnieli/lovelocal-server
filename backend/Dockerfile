@@ -3,11 +3,21 @@ FROM gcr.io/google-appengine/python
 RUN apt-get update && apt-get install -y \
     binutils \
     gdal-bin \
-    python-gdal
+    python-gdal \
+    libgdal-dev \
+    python3-gdal
+
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
 
 # Create a virtualenv for dependencies. This isolates these packages from
 # system-level packages.
-RUN virtualenv /env -p python3.6
+RUN virtualenv /env -p python3.7
+
+
+## This will install latest version of GDAL
+# RUN pip install GDAL==2.4.2
+RUN pip install gdal --install-option="--include-dirs=/usr/include/gdal/"
 
 # Setting these environment variables are the same as running
 # source /env/bin/activate.
@@ -18,6 +28,10 @@ ENV PATH /env/bin:$PATH
 # dependencies into the virtualenv.
 ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
+
+# ENV DJANGO_ALLOWED_HOSTS ""
+# RUN python manage.py collectstatic --noinput
+
 # Add the application source code.
 ADD . /app
 

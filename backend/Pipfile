@@ -46,6 +46,7 @@ Pillow = "==7.0.0"
 Pygments = "==2.6.1"
 Werkzeug = "==1.0.1"
 jupyterlab = "*"
+beautifulsoup4 = "*"
 
 [requires]
 python_version = "3.8"

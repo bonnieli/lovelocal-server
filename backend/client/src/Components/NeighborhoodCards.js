@@ -38,10 +38,6 @@ const NeighborhoodCards = ({}) => {
     getPlaces();
   }, [search]);
 
-  const onLoadMore = () => {
-    getPlaces();
-  };
-
   return (
     <>
       <DebounceInput
@@ -49,13 +45,22 @@ const NeighborhoodCards = ({}) => {
         debounceTimeout={800}
         onChange={searchChange}
         onKeyDown={e => {
-          setLoading(true);
+          if (search !== e.target.value) setLoading(true);
         }}
         placeholder="Search Toronto's restaurants, coffee shops, etc."
         className="search-bar"
       />
 
-      {!loading && suggestedPlaces && suggestedPlaces.length > 0 && (
+      {loading && (
+        <div
+          className="loading-search"
+          style={{ position: "absolute", top: 35, right: 35 }}
+        >
+          <Spin />
+        </div>
+      )}
+
+      {suggestedPlaces && suggestedPlaces.length > 0 && (
         <div style={{ textAlign: "center" }}>
           <Row gutter={16} style={{ justifyContent: "center" }}>
             {suggestedPlaces.map(place => {
@@ -63,20 +68,20 @@ const NeighborhoodCards = ({}) => {
             })}
           </Row>
 
-          {moreAvailable && (
+          {moreAvailable && !loading && (
             <Button
               className="primary-button"
               shape="round"
               size="default"
-              onClick={onLoadMore}
+              onClick={getPlaces}
             >
               Load More
             </Button>
           )}
+
+          {loading && <Spin />}
         </div>
       )}
-
-      {loading && <Spin />}
 
       {suggestedPlaces && suggestedPlaces.length === 0 && <p>No results</p>}
     </>

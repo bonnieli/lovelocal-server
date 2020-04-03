@@ -31,12 +31,12 @@ def neighborhood_detail(request):
     max_offset = per_page + offset
 
     if search:
-        print(search)
         place_list = Place.objects.filter(place_id__icontains=search)
     else:
         place_list = Place.objects.all()[offset:max_offset]
 
-    print(place_list)
+    if len(place_list) < per_page:
+        more_available = False
 
     return JsonResponse({
         'suggestedPlaces': [x.to_json() for x in place_list],

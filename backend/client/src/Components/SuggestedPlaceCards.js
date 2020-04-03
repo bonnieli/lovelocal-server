@@ -3,7 +3,7 @@ import { Button, Row, Col } from "antd";
 
 const PlaceCard = ({ place }) => {
   return (
-    <Col xs={12}>
+    <Col xs={24} sm={12}>
       <Row className="place-card">
         <Col xs={8} className="place-container">
           <div

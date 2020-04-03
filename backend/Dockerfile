@@ -29,8 +29,6 @@ ENV PATH /env/bin:$PATH
 ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
-# ENV DJANGO_ALLOWED_HOSTS ""
-# RUN python manage.py collectstatic --noinput
 
 # Add the application source code.
 ADD . /app

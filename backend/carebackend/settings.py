@@ -143,16 +143,8 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
-
-# STATIC_URL = 'https://storage.googleapis.com/lovelocals-272900.appspot.com/admin/'
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
-print("static url", STATIC_URL)
-# collectstatic directory (located OUTSIDE the base directory)
-# TODO: configure the name and path to your static bucket directory (where collectstatic will copy to)
-# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'STATIC-BUCKET-NAME')
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
 STATICFILES_DIRS = [
@@ -168,7 +160,3 @@ EMAIL_USE_SSL = True
 GOOGLE_PLACES_API_KEY = ""
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
-# try:
-#     from .private_keys import GOOGLE_PLACES_API_KEY, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
-# except ImportError as e:
-#     print("Please supply a private_keys.py file with a GOOGLE_PLACES_API_KEY")

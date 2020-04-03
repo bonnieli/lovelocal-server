@@ -31,7 +31,7 @@ class FAQEntry extends React.Component {
   }
 }
 
-function FAQModal(props) {
+function FAQModal({ shouldShow, onClose }) {
   function renderLink(url, text, target) {
     target = target || "_blank";
     return "<a target='" + target + "' href='" + url + "'>" + text + "</a>";
@@ -103,10 +103,10 @@ function FAQModal(props) {
   return (
     <Modal
       title="FAQs"
-      visible={props.shouldShow}
-      onOk={props.onClose}
+      visible={shouldShow}
+      onOk={onClose}
       width="80%"
-      onCancel={props.onClose}
+      onCancel={onClose}
       footer={<span></span>}
     >
       <h2>For Restaurant-goers</h2>

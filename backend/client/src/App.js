@@ -1,5 +1,5 @@
 import "./App.scss";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Button, Popover, Row, Col } from "antd";
 
@@ -7,10 +7,16 @@ import logo from "./assets/images/logo.jpg";
 import Main from "./Components/Main";
 import ShareOptions from "./Components/ShareOptions";
 import About from "./Components/About";
+import Faq from "./Components/Faq";
+import { Mixpanel } from "./lib/Mixpanel";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const App = () => {
+  useEffect(() => {
+    Mixpanel.track("Visit: Homepage");
+  }, []);
+
   return (
     <Router>
       <div>
@@ -42,6 +48,10 @@ const App = () => {
         <Switch>
           <Route path="/about">
             <About />
+          </Route>
+
+          <Route path="/faq">
+            <Faq />
           </Route>
 
           <Route path="/">

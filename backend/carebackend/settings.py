@@ -27,7 +27,7 @@ DEBUG = False
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
 print(ALLOWED_HOSTS)
 
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.gis',
+    # 'django.contrib.gis',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -82,9 +82,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': os.environ.get("DB_HOST", "localhost"),
         'PORT': os.environ.get("DB_PORT", 5432),
-        # 'OPTIONS': {
-        #     'options': '-c search_path=django,supportlocal,public'
-        # },
         'USER': os.environ.get("DB_USER", "postgres"),
         'PASSWORD': os.environ.get("DB_PSWD", ""),
         'NAME': os.environ.get("DB_NAME", "postgres")
@@ -143,12 +140,13 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = 'static'
+ADMIN_MEDIA_PREFIX = '/static/admin/' 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
 STATICFILES_DIRS = [
-    os.path.join(REACT_APP_DIR, 'build', 'static'),
+    os.path.join(REACT_APP_DIR, 'build', 'static')
 ]
 
 print("directory", STATICFILES_DIRS)

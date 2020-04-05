@@ -13,16 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+from django.contrib import admin, admindocs
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url, include
 from places.views import (test, neighborhood_detail, check_url,
                           FrontendAppView)
 
+admin.autodiscover()
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('api/places/by_neighborhood', neighborhood_detail),
     path('api/test', test),
     path('url_checker', check_url),
-    url(r'^', FrontendAppView.as_view())
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # path('admin/doc/', admindocs.urls),
+
+    path('', FrontendAppView.as_view(), name='index')
 ]

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Row, Spin } from "antd";
+import { Button, Row, Spin } from "antd";
 import PlaceCard from "./SuggestedPlaceCards";
 import { DebounceInput } from "react-debounce-input";
 

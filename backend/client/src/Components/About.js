@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-import { Button, Popover, Typography, Row, Col } from "antd";
+import { Typography, Row, Col } from "antd";
+import { Mixpanel } from "../lib/Mixpanel";
 
 const { Title } = Typography;
 
 const About = () => {
+  useEffect(() => {
+    Mixpanel.track("Visit: About Page");
+  }, []);
+
   return (
     <div>
       <Title level={1} style={{ textAlign: "center" }}>

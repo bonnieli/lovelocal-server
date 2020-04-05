@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 
-import { Button, Popover, Typography, Row, Col } from "antd";
+import { Typography, Row, Col } from "antd";
 
 import FAQModal from "./FAQModal";
 import NeighborhoodCards from "./NeighborhoodCards";
-import ShareOptions from "./ShareOptions";
-import logo from "../assets/images/logo.jpg";
 
 const { Title } = Typography;
 
@@ -26,8 +24,7 @@ const Main = () => {
               style={{ textAlign: "center", padding: "20px 0px" }}
             >
               <Title level={1} style={{ textAlign: "center" }}>
-                Your favorite Toronto restaurant might close forever. Help save
-                it.
+                Show your support to your favourite Toronto businesses.
               </Title>
               <div className="header-sans">
                 Support your favourite local restaurants by buying gift cards

@@ -1,7 +1,12 @@
 import React from "react";
 import { Button, Row, Col } from "antd";
+import { Mixpanel } from "../lib/Mixpanel";
 
 const PlaceCard = ({ place }) => {
+  const onClickBuy = () => {
+    Mixpanel.track("Clicked Buy Gift Card", place);
+  };
+
   return (
     <Col xs={24} sm={12}>
       <Row className="place-card">
@@ -17,7 +22,11 @@ const PlaceCard = ({ place }) => {
           <h3>{place.placeID}</h3>
           <div>
             {place.giftCardURL && (
-              <Button href={place.giftCardURL} target="_blank">
+              <Button
+                href={place.giftCardURL}
+                onClick={onClickBuy}
+                target="_blank"
+              >
                 Buy Gift Card
               </Button>
             )}

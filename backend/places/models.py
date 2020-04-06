@@ -121,6 +121,7 @@ from django.contrib.gis.measure import D
 
 
 class Place(models.Model):
+    yelp_id = models.TextField()
     name = models.TextField()
     image_url = models.URLField(blank=True)
     url = models.URLField(blank=True)

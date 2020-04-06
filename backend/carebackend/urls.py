@@ -30,5 +30,5 @@ urlpatterns = [
     # Uncomment the admin/doc line below to enable admin documentation:
     # path('admin/doc/', admindocs.urls),
 
-    path('', FrontendAppView.as_view(), name='index')
+    url(r'^', FrontendAppView.as_view())
 ]

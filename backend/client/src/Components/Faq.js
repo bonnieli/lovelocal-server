@@ -8,6 +8,8 @@ const { Panel } = Collapse;
 const { Title } = Typography;
 
 const Faq = () => {
+  const FORM_URL = process.env.REACT_APP_FORM_URL;
+
   useEffect(() => {
     Mixpanel.track("Visit: FAQ Page");
   }, []);
@@ -68,14 +70,32 @@ const Faq = () => {
             >
               <p>
                 We would love to add your Toronto based business. Please let us
-                know here.
+                know{" "}
+                <a
+                  href={`${FORM_URL}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+                .
               </p>
             </Panel>
             <Panel
               header="My business offers gift certificates, but your site says we don’t"
               key="2"
             >
-              <p>Please let us know here.</p>
+              <p>
+                Please let us know{" "}
+                <a
+                  href={`${FORM_URL}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
             </Panel>
             <Panel header="How can I start offering online gift cards?" key="3">
               <p>

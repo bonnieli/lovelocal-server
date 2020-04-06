@@ -140,7 +140,7 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-ADMIN_MEDIA_PREFIX = '/static/admin/' 
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 

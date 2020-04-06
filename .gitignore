@@ -151,5 +151,5 @@ private_keys.py
 
 client/node_modules/
 
-app.yaml
+backend/app.yaml
 

@@ -1,4 +1,4 @@
-SOURCE = 'business_v2.csv'
+SOURCE = 'scripts/businesses_v2.csv'
 YELP_KEYS = [
     'name',
     'image_url',

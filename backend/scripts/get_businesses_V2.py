@@ -6,13 +6,14 @@ from bs4 import BeautifulSoup as bs
 import re
 import os
 
-YELP_API_KEY = os.environ['YELP_API_KEY']
+# YELP_API_KEY = os.environ['YELP_API_KEY']
+from scripts.YELP_API_KEY import YELP_API_KEY
 
 
 def search_nested(nested_dictionary,
                   keys: List[str],
                   aliases=None,
-                  result=[]) -> List[Dict[str: str]]:
+                  result=[]) -> List[Dict[str, str]]:
     """
     Searches a nested dictionary for the given keys and returns a list of key
     and value pairs substituted with the aliases if given.
@@ -76,7 +77,7 @@ def scrape_business_info(yelp_url):
 
 
 def main(csv_file: str, keys: List[str],
-         aliases: Dict[str: str],
+         aliases: Dict[str, str],
          create_json=False):
     """
     Reads ids from a csv file, grabs data from yelp and optionally generates a
@@ -96,7 +97,7 @@ def main(csv_file: str, keys: List[str],
     for business in businesses:
         business['url'] = scrape_business_info(business['yelp_url'])
     if create_json is True:
-        with open('businesses.json', 'w') as json_file:
+        with open('scripts/businesses.json', 'w') as json_file:
             json.dump(businesses, json_file)
     return businesses
 

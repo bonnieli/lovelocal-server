@@ -122,25 +122,39 @@ from django.contrib.gis.measure import D
 
 class Place(models.Model):
     name = models.TextField()
-    place_id = models.TextField(primary_key=True)
-    lat = models.FloatField()
-    lng = models.FloatField()
-    image = models.TextField(null=True)
-    address = models.TextField(null=True)
+    image_url = models.URLField(blank=True)
+    url = models.URLField(blank=True)
+    phone = models.TextField(blank=True,
+                             max_length=12)
+    street_address = models.TextField(blank=True)
+    city = models.TextField(blank=True)
+    postal_code = models.TextField(blank=True,
+                                   max_length=6)
+    province = models.TextField(blank=True)
+    country = models.TextField(blank=True)
+    latitude = models.FloatField(blank=True)
+    longitude = models.FloatField(blank=True)
+    price = models.IntegerField(blank=True)
+    giftcard_url = models.URLField(blank=True)
 
-    user_rating = models.FloatField(null=True)
-    num_ratings = models.FloatField(null=True)
-
-    # area = models.ForeignKey(to='Area', null=True, blank=True, on_delete=models.SET_NULL)
-    email_contact = models.EmailField(null=True, blank=True)
-    place_url = models.URLField(null=True, blank=True, max_length=1000)
-    image_url = models.URLField(null=True, blank=True, max_length=1000)
-    image_attribution = models.TextField(null=True, blank=True)
-    gift_card_url = models.URLField(null=True, blank=True, max_length=1000)
-    takeout_url = models.URLField(null=True, blank=True, max_length=1000)
-    donation_url = models.URLField(null=True, blank=True, max_length=1000)
-    # geom = models.PointField(srid=4326, null=True, blank=True)
-    place_types = models.TextField(null=True, blank=True)
+    # place_id = models.TextField(primary_key=True)
+    # lat = models.FloatField()
+    # lng = models.FloatField()
+    # address = models.TextField(blank=True)
+    #
+    # user_rating = models.FloatField(blank=True)
+    # num_ratings = models.FloatField(blank=True)
+    #
+    # # area = models.ForeignKey(to='Area', null=True, blank=True, on_delete=models.SET_NULL)
+    # email_contact = models.EmailField(blank=True)
+    # place_url = models.URLField(blank=True, max_length=1000)
+    # image_url = models.URLField(blank=True, max_length=1000)
+    # image_attribution = models.TextField(blank=True)
+    # gift_card_url = models.URLField(blank=True, max_length=1000)
+    # takeout_url = models.URLField(blank=True, max_length=1000)
+    # donation_url = models.URLField(blank=True, max_length=1000)
+    # # geom = models.PointField(srid=4326, null=True, blank=True)
+    # place_types = models.TextField(blank=True)
 
     @classmethod
     def dump_names_for_site(cls, out_fl):

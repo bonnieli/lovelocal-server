@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f4fd14b38995b51da146eaa8d5122475c66c06c5d7905863217020904f23216b"
+            "sha256": "0a18bf08047ff23a023a4902492c6aee85f9c8cfbedc0d0d584103101e2d217d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -78,7 +78,7 @@
                 "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff",
                 "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"
             ],
-            "markers": "sys_platform == 'win32'",
+            "index": "pypi",
             "version": "==0.4.3"
         },
         "decorator": {
@@ -91,11 +91,26 @@
         },
         "django": {
             "hashes": [
-                "sha256:50b781f6cbeb98f673aa76ed8e572a019a45e52bdd4ad09001072dfd91ab07c8",
-                "sha256:89e451bfbb815280b137e33e454ddd56481fdaa6334054e6e031041ee1eda360"
+                "sha256:0fd54e4f27bc3e0b7054a11e6b3a18fa53f2373f6b2df8a22e8eadfe018970a5",
+                "sha256:f3b28084101d516f56104856761bc247f85a2a5bbd9da39d9f6197ff461b3ee4"
             ],
             "index": "pypi",
-            "version": "==3.0.4"
+            "version": "==2.1.8"
+        },
+        "django-rest-framework": {
+            "hashes": [
+                "sha256:47a8f496fa69e3b6bd79f68dd7a1527d907d6b77f009e9db7cf9bb21cc565e4a"
+            ],
+            "index": "pypi",
+            "version": "==0.1.0"
+        },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4",
+                "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"
+            ],
+            "index": "pypi",
+            "version": "==3.11.0"
         },
         "flask": {
             "hashes": [
@@ -460,6 +475,7 @@
                 "sha256:e914534802d7ffd233242b785229d5ba0766a7f487385e3f714446a07bf540ae",
                 "sha256:fcd71e08c0aee99aca1b73f45478549ee7e7fc006d51b37bec9e9def7dc22b69"
             ],
+            "index": "pypi",
             "version": "==2.0"
         },
         "sqlparse": {

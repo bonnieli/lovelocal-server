@@ -1,10 +1,12 @@
-from YELP_API_KEY import YELP_API_KEY
 import csv
 import requests
 import json
 from typing import List, Dict
 from bs4 import BeautifulSoup as bs
 import re
+import os
+
+YELP_API_KEY = os.environ['YELP_API_KEY']
 
 
 def search_nested(nested_dictionary,
@@ -75,7 +77,7 @@ def scrape_business_info(yelp_url):
 
 def main(csv_file: str, keys: List[str],
          aliases: Dict[str: str],
-         create_json=False) -> bool:
+         create_json=False):
     """
     Reads ids from a csv file, grabs data from yelp and optionally generates a
     json file.
@@ -83,7 +85,7 @@ def main(csv_file: str, keys: List[str],
     :param keys: keys to be grabbed from yelp api
     :param aliases: aliases to be used
     :param create_json: whether a json file should be created
-    :return: True if successful
+    :return: List of businesses
     """
     ids: List[str] = []
     with open(csv_file, 'r') as csv_file:
@@ -96,33 +98,12 @@ def main(csv_file: str, keys: List[str],
     if create_json is True:
         with open('businesses.json', 'w') as json_file:
             json.dump(businesses, json_file)
-    return True
+    return businesses
 
 
 if __name__ == '__main__':
-    source_csv = 'businesses_v2.csv'
-    yelp_keys = [
-        'name',
-        'image_url',
-        'url',
-        'phone',
-        'categories',
-        'address1',
-        'city',
-        'zip_code',
-        'country',
-        'state',
-        'latitude',
-        'longitude',
-        'price',
-    ]
-    yelp_aliases = {
-        'url': 'yelp_url',
-        'address1': 'street_address',
-        'zip_code': 'postal_code',
-        'state': 'province',
-    }
-    main(csv_file=source_csv,
-         keys=yelp_keys,
-         aliases=yelp_aliases,
+    from scripts.config import SOURCE, YELP_KEYS, ALIASES
+    main(csv_file=SOURCE,
+         keys=YELP_KEYS,
+         aliases=ALIASES,
          create_json=False)

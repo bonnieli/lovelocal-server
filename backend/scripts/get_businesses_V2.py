@@ -69,7 +69,7 @@ def scrape_business_info(yelp_url):
     :return: the url scraped as a string
     """
     response = requests.get(yelp_url)
-    soup = bs(response.text)
+    soup = bs(response.text, 'html.parser')
     url = soup.find('a', href=re.compile("^\/biz_redir\?url="), role='link')
     if url is not None:
         return url.text

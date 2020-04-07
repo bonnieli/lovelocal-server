@@ -1,11 +1,10 @@
 import "./App.scss";
 import React, { useEffect } from "react";
 
-import { Button, Popover, Row, Col } from "antd";
+import { Row, Col } from "antd";
 
 import logo from "./assets/images/logo.jpg";
 import Main from "./Components/Main";
-import ShareOptions from "./Components/ShareOptions";
 import About from "./Components/About";
 import Faq from "./Components/Faq";
 import { Mixpanel } from "./lib/Mixpanel";
@@ -44,13 +43,6 @@ const App = () => {
               </li>
               <li>
                 <Link to="/faq">FAQ</Link>
-              </li>
-              <li>
-                <Popover content={<ShareOptions />}>
-                  <Button shape="round" className="header-button">
-                    Tell friends
-                  </Button>
-                </Popover>
               </li>
             </ul>
           </Col>

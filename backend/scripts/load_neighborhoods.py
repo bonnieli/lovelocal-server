@@ -6,7 +6,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'carebackend.settings'
 sys.path.append(os.path.dirname(__file__) + '/..')
 django.setup()
 from places.models import Neighborhood, NeighborhoodEntry, Place, Area
-from django.contrib.gis.geos import Polygon
+# from django.contrib.gis.geos import Polygon
 import pandas as pd
 from shapely.geometry import Polygon as ShapelyPolygon
 

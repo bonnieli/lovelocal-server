@@ -1,9 +1,9 @@
 import json
-from django.db.models import Q
-from django.contrib.gis.db import models
-from django.contrib.gis.geos import Point
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.measure import D
+# from django.db.models import Q
+from django.db import models
+# from django.contrib.gis.geos import Point
+# from django.contrib.gis.db.models.functions import Distance
+# from django.contrib.gis.measure import D
 
 
 # class EmailSubscription(models.Model):

@@ -1,39 +1,78 @@
+from typing import Dict
+import csv
+from get_businesses_V2 import main
+from config import SOURCE, YELP_KEYS, ALIASES
+import json
 import django
 import sys
 import os
+
 sys.path.append(os.path.dirname(__file__) + '/..')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'carebackend.settings'
 django.setup()
+
 from places.models import Place
-import pandas as pd
-import sys
-import json
 
-fl = sys.argv[1]
 
-df = pd.read_csv(fl)
+# businesses = main(csv_file=SOURCE,
+#                   keys=YELP_KEYS,
+#                   aliases=ALIASES,
+#                   create_json=True)
+f = open('./scripts/businesses.json', "r")
+businesses = json.loads(f.read())
 
-for _, row in df.iterrows():
+print(businesses, len(businesses))
+gift_cards: Dict[str, str] = {}
 
-    name = row[2]
-    print(name)
-    coord = row[4]
-    coord = coord.replace("\'", "\"")
-    coord = json.loads(coord)
-    image = row[7]
-    gc_url = row[8]
+with open(SOURCE, 'r') as csv_file:
+    for row in csv.reader(csv_file):
+        if row[8] and row[8] != 'NA':
+            gift_cards[row[0]] = row[8]
+
+for business in businesses:
+    if business['id'] in gift_cards:
+        id_ = gift_cards[business['id']]
+    else:
+        id_ = ''
 
     try:
-        p = Place.objects.get(place_id=name)
+        business_ = Place.objects.get(place_id=business['name'])
+
+        business_.name = business['name']
+        business_.image_url = business['image_url']
+
+        business_.city = business['city']
+        business_.country = business['country']
+        business_.latitude = business['latitude']
+        business_.longitude = business['longitude']
+        business_.phone = business['phone']
+
+        business_.postal_code = business['postal_code'].replace(' ', '')
+        business_.price = business.get('price', []).count('$')
+        business_.province = business['province']
+        business_.street_address = business['street_address']
+        business_.url = business['url'] if business['url'] else ""
+        business_.yelp_id = business['id']
+
+        business_.giftcard_url = id_
+        business_.save()
     except Place.DoesNotExist:
-        print("Something new...", name)
-        p = Place(place_id=name)
+        print("does not exist", business)
 
-    p.lat = coord.get("latitude")
-    p.lng = coord.get("longitude")
-    p.image = image
+        business_ = Place(yelp_id=business['id'],
+                          name=business['name'],
+                          place_id=business['name'],
+                          image_url=business['image_url'],
+                          phone=business['phone'],
+                          street_address=business['street_address'],
+                          city=business['city'],
+                          postal_code=business['postal_code'].replace(' ', ''),
+                          country=business['country'],
+                          province=business['province'],
+                          latitude=business['latitude'],
+                          longitude=business['longitude'],
+                          price=business.get('price', []).count('$'),
+                          url=business['url'] if business['url'] else "",
+                          giftcard_url=id_)
+        business_.save()
 
-    if gc_url == gc_url: # checks if its NaN value 
-        p.gift_card_url = gc_url
-
-    p.save()

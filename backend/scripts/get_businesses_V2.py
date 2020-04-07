@@ -57,7 +57,7 @@ def get_business_info(ids: List[str],
             elif key in keys:
                 business[key] = response.json()[key]
             elif type(value) is dict:
-                nested_keys = search_nested(value, keys, aliases)
+                nested_keys = search_nested(value, keys, aliases, [])
                 for result in nested_keys:
                     business.update(result)
         print("Grabbed info: ", business)

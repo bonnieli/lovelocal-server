@@ -39,7 +39,17 @@ const Faq = () => {
               header="Why isn’t my favorite business on your site?"
               key="2"
             >
-              <p>Please help us add any missing spots here.</p>
+              <p>
+                Please help us add any missing spots{" "}
+                <a
+                  href={`${FORM_URL}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
             </Panel>
             <Panel
               header="How else can I support our local businesses beyond purchasing a gift card?"

@@ -157,43 +157,8 @@ class Place(models.Model):
     # # geom = models.PointField(srid=4326, null=True, blank=True)
     # place_types = models.TextField(blank=True)
 
-    @classmethod
-    def dump_names_for_site(cls, out_fl):
-        all_places = cls.objects.all()
-        output = []
-        for place in all_places:
-            info = (
-                """{{key: "{place_id}", address: "{address}", name: "{name}"}},""".format(
-                    name=place.name,
-                    address=place.get_short_address(),
-                    place_id=place.place_id)
-            )
-            output.append(info)
-        with open(out_fl, 'w') as fl:
-            fl.writelines(output)
-
-    @classmethod
-    def dump_places_missing_photos(cls, out_fl):
-        missing_photo = cls.objects.filter(image_url=None)
-        names = ['%s\n' % place.place_id for place in missing_photo]
-        with open(out_fl, 'w') as fl:
-            fl.writelines(names)
-
-    @classmethod
-    def dump_places_missing_website(cls, out_fl):
-        missing_photo = cls.objects.filter(place_url=None)
-        names = ['%s\n' % place.place_id for place in missing_photo]
-        with open(out_fl, 'w') as fl:
-            fl.writelines(names)
-
     def get_image_url(self):
         return self.image or "http://TODO/placeholder"
-
-    def get_short_address(self):
-        if self.address:
-            return self.address.split(', CA')[0]
-        else:
-            return ""
 
     def to_json(self):
         return {
@@ -207,10 +172,6 @@ class Place(models.Model):
     def to_typeahead_json(self):
         return {
             'name': self.name,
-            'address': self.get_short_address(),
             'key': self.place_id,
             'image_attribution': self.image_attribution
         }
-
-    def __str__(self):
-        return '%s (%s)' % (self.name, self.address)

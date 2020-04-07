@@ -6,6 +6,7 @@ import json
 import django
 import sys
 import os
+import datetime as dt
 
 sys.path.append(os.path.dirname(__file__) + '/..')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'carebackend.settings'
@@ -29,6 +30,8 @@ with open(SOURCE, 'r') as csv_file:
         if row[8] and row[8] != 'NA':
             gift_cards[row[0]] = row[8]
 
+time_added = dt.datetime.now(tz=dt.timezone.utc)
+
 for business in businesses:
     if business['id'] in gift_cards:
         id_ = gift_cards[business['id']]
@@ -36,7 +39,7 @@ for business in businesses:
         id_ = ''
 
     try:
-        business_ = Place.objects.get(place_id=business['name'])
+        business_ = Place.objects.get(yelp_id=business['yelp_id'])
 
         business_.name = business['name']
         business_.image_url = business['image_url']
@@ -61,7 +64,6 @@ for business in businesses:
 
         business_ = Place(yelp_id=business['id'],
                           name=business['name'],
-                          place_id=business['name'],
                           image_url=business['image_url'],
                           phone=business['phone'],
                           street_address=business['street_address'],
@@ -73,6 +75,7 @@ for business in businesses:
                           longitude=business['longitude'],
                           price=business.get('price', []).count('$'),
                           url=business['url'] if business['url'] else "",
-                          giftcard_url=id_)
+                          giftcard_url=id_,
+                          date_added=time_added)
         business_.save()
 

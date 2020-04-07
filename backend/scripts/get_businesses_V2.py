@@ -6,8 +6,7 @@ from bs4 import BeautifulSoup as bs
 import re
 import os
 
-# YELP_API_KEY = os.environ['YELP_API_KEY']
-from scripts.YELP_API_KEY import YELP_API_KEY
+YELP_API_KEY = os.environ['YELP_API_KEY']
 
 
 def search_nested(nested_dictionary,
@@ -47,8 +46,11 @@ def get_business_info(ids: List[str],
     url = 'https://api.yelp.com/v3/businesses/'
     headers = {'Authorization': f'Bearer {YELP_API_KEY}'}
     for id_ in ids:
+        print("Get business info: ", id_)
+
         response = requests.get(f'{url}{id_}', headers=headers)
         business = {'id': id_}
+
         for key, value in response.json().items():
             if key in keys and aliases is not None and key in aliases:
                 business[aliases[key]] = response.json()[key]
@@ -58,6 +60,7 @@ def get_business_info(ids: List[str],
                 nested_keys = search_nested(value, keys, aliases)
                 for result in nested_keys:
                     business.update(result)
+        print("Grabbed info: ", business)
         businesses.append(business)
     return businesses
 

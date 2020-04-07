@@ -133,12 +133,12 @@ class Place(models.Model):
                                    max_length=6)
     province = models.TextField(blank=True)
     country = models.TextField(blank=True)
-    latitude = models.FloatField(blank=True)
-    longitude = models.FloatField(blank=True)
-    price = models.IntegerField(blank=True)
+    latitude = models.FloatField(blank=True, default=0)
+    longitude = models.FloatField(blank=True, default=0)
+    price = models.IntegerField(blank=True, default=0)
     giftcard_url = models.URLField(blank=True)
 
-    # place_id = models.TextField(primary_key=True)
+    place_id = models.TextField(primary_key=True)
     # lat = models.FloatField()
     # lng = models.FloatField()
     # address = models.TextField(blank=True)
@@ -199,14 +199,10 @@ class Place(models.Model):
         return {
             'name': self.name,
             'address': self.get_short_address(),
-            'giftCardURL': self.gift_card_url,
-            'takeoutURL': self.takeout_url,
-            'donationURL': self.donation_url,
-            'placeURL': self.place_url,
-            'emailContact': self.email_contact,
-            'imageURL': self.get_image_url(),
+            'giftCardURL': self.giftcard_url,
+            'imageURL': self.image_url,
             'placeID': self.place_id,
-            # 'area': self.area.key if self.area else None
+            'website': self.url
         }
 
     def to_typeahead_json(self):
@@ -219,11 +215,3 @@ class Place(models.Model):
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.address)
-
-    def save(self, *args, **kwargs):
-        from places.helper import check_link_against_blacklist
-        if self.gift_card_url and not check_link_against_blacklist(self.gift_card_url):
-            raise Exception("Bad Link Saved")
-        if (self.lat and self.lng):
-            self.geom = Point([float(x) for x in (self.lng, self.lat)], srid=4326)
-        super(self.__class__, self).save(*args, **kwargs)

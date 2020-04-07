@@ -1,22 +1,25 @@
+from typing import Dict
+import csv
+from get_businesses_V2 import main
+from config import SOURCE, YELP_KEYS, ALIASES
+import json
 import django
 import sys
 import os
+
 sys.path.append(os.path.dirname(__file__) + '/..')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'carebackend.settings'
 django.setup()
+
 from places.models import Place
-import sys
-import json
-from scripts.config import SOURCE, YELP_KEYS, ALIASES
-from scripts.get_businesses_V2 import main
-import csv
-from typing import Dict
+
 
 businesses = main(csv_file=SOURCE,
                   keys=YELP_KEYS,
                   aliases=ALIASES,
                   create_json=False)
 
+print(businesses)
 gift_cards: Dict[str, str] = {}
 
 with open(SOURCE, 'r') as csv_file:
@@ -25,17 +28,39 @@ with open(SOURCE, 'r') as csv_file:
             gift_cards[row[0]] = row[8]
 
 for business in businesses:
+    if business['id'] in gift_cards:
+        id_ = gift_cards[business['id']]
+    else:
+        id_ = ''
+
     try:
-        business_ = Place.objects.get(name=business['name'])
+        business_ = Place.objects.get(place_id=business['name'])
+
+        business_.name = business['name']
+        business_.image_url = business['image_url']
+
+        business_.city = business['city']
+        business_.country = business['country']
+        business_.latitude = business['latitude']
+        business_.longitude = business['longitude']
+        business_.phone = business['phone']
+
+        business_.postal_code = business['postal_code'].replace(' ', '')
+        business_.price = business['price'].count('$')
+        business_.province = business['province']
+        business_.street_address = business['street_address']
+        business_.url = business['url']
+        business_.yelp_id = business['id']
+
+        business_.giftcard_url = id_
+        business_.save()
     except Place.DoesNotExist:
-        if business['id'] in gift_cards:
-            id_ = gift_cards[business['id']]
-        else:
-            id_ = ''
+        print("does not exist", business)
+
         business_ = Place(yelp_id=business['id'],
                           name=business['name'],
-                          iamge_url=business['image_url'],
-                          yelp_url=business['yelp_url'],
+                          place_id=business['name'],
+                          image_url=business['image_url'],
                           phone=business['phone'],
                           street_address=business['street_address'],
                           city=business['city'],

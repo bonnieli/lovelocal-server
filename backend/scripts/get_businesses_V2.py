@@ -71,6 +71,7 @@ def scrape_business_info(yelp_url):
     :param yelp_url: yelp url to scrape
     :return: the url scraped as a string
     """
+    print("Scraping for website url: ", yelp_url)
     response = requests.get(yelp_url)
     soup = bs(response.text, 'html.parser')
     url = soup.find('a', href=re.compile("^\/biz_redir\?url="), role='link')

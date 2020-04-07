@@ -198,7 +198,6 @@ class Place(models.Model):
     def to_json(self):
         return {
             'name': self.name,
-            'address': self.get_short_address(),
             'giftCardURL': self.giftcard_url,
             'imageURL': self.image_url,
             'placeID': self.place_id,

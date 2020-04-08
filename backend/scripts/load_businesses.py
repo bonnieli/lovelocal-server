@@ -58,6 +58,7 @@ for business in businesses:
         business_.yelp_id = business['id']
 
         business_.giftcard_url = id_
+        business_.date_added = time_added
         business_.save()
     except Place.DoesNotExist:
         print("does not exist", business)

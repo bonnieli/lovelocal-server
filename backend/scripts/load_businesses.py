@@ -58,7 +58,7 @@ for business in businesses:
         business_.yelp_id = business['id']
 
         business_.giftcard_url = id_
-        business_.updated = updated
+        business_.last_updated = updated
         business_.save()
     except Place.DoesNotExist:
         print("does not exist", business)
@@ -77,6 +77,7 @@ for business in businesses:
                           price=business.get('price', []).count('$'),
                           url=business['url'] if business['url'] else "",
                           giftcard_url=id_,
-                          date_added=updated)
+                          last_updated=updated,
+                          created_at=updated)
         business_.save()
 

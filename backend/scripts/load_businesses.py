@@ -30,7 +30,7 @@ with open(SOURCE, 'r') as csv_file:
         if row[8] and row[8] != 'NA':
             gift_cards[row[0]] = row[8]
 
-time_added = dt.datetime.now(tz=dt.timezone.utc)
+updated = dt.datetime.now(tz=dt.timezone.utc)
 
 for business in businesses:
     if business['id'] in gift_cards:
@@ -58,7 +58,7 @@ for business in businesses:
         business_.yelp_id = business['id']
 
         business_.giftcard_url = id_
-        business_.date_added = time_added
+        business_.updated = updated
         business_.save()
     except Place.DoesNotExist:
         print("does not exist", business)
@@ -77,6 +77,6 @@ for business in businesses:
                           price=business.get('price', []).count('$'),
                           url=business['url'] if business['url'] else "",
                           giftcard_url=id_,
-                          date_added=time_added)
+                          date_added=updated)
         business_.save()
 

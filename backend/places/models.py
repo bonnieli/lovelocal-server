@@ -138,7 +138,7 @@ class Place(models.Model):
     price = models.IntegerField(blank=True, default=0)
     giftcard_url = models.URLField(blank=True)
 
-    date_added = models.DateTimeField()
+    updated = models.DateTimeField()
     # lat = models.FloatField()
     # lng = models.FloatField()
     # address = models.TextField(blank=True)

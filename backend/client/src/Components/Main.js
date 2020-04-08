@@ -18,7 +18,7 @@ const Main = () => {
             style={{ textAlign: "center", padding: "20px 0px" }}
           >
             <Title level={1} style={{ textAlign: "center" }}>
-              Show your support to your favourite Toronto businesses.
+              Show support to your favourite Toronto businesses.
             </Title>
             <div className="header-sans">
               Support your favourite local restaurants by buying gift cards now

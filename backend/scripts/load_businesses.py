@@ -39,7 +39,7 @@ for business in businesses:
         id_ = ''
 
     try:
-        business_ = Place.objects.get(yelp_id=business['yelp_id'])
+        business_ = Place.objects.get(yelp_id=business['id'])
 
         business_.name = business['name']
         business_.image_url = business['image_url']

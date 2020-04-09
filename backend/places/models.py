@@ -1,9 +1,9 @@
 import json
-from django.db.models import Q
-from django.contrib.gis.db import models
-from django.contrib.gis.geos import Point
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.measure import D
+# from django.db.models import Q
+from django.db import models
+# from django.contrib.gis.geos import Point
+# from django.contrib.gis.db.models.functions import Distance
+# from django.contrib.gis.measure import D
 
 
 # class EmailSubscription(models.Model):
@@ -138,7 +138,8 @@ class Place(models.Model):
     price = models.IntegerField(blank=True, default=0)
     giftcard_url = models.URLField(blank=True)
 
-    place_id = models.TextField(primary_key=True)
+    last_updated = models.DateTimeField()
+    created_at = models.DateTimeField()
     # lat = models.FloatField()
     # lng = models.FloatField()
     # address = models.TextField(blank=True)

@@ -31,7 +31,7 @@ def neighborhood_detail(request):
     max_offset = per_page + offset
 
     if search:
-        place_list = Place.objects.filter(place_id__icontains=search)
+        place_list = Place.objects.filter(name__icontains=search)
     else:
         place_list = Place.objects.all()[offset:max_offset]
 

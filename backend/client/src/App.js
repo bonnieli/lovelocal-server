@@ -24,7 +24,12 @@ const App = () => {
         <Row className="top-header">
           <Col xs={24} sm={8}>
             <Link to="/">
-              <img src={logo} width={100} style={{ padding: 10 }} />
+              <img
+                src={logo}
+                alt="LoveLocals Logo"
+                width={100}
+                style={{ padding: 10 }}
+              />
             </Link>
           </Col>
           <Col xs={24} sm={16}>

@@ -30,7 +30,7 @@ const PlaceCard = ({ place }) => {
           ></div>
         </Col>
         <Col xs={16} style={{ paddingLeft: 10 }}>
-          <h3>{place.placeID}</h3>
+          <h3>{place.name}</h3>
           <div>
             {place.giftCardURL && (
               <Button

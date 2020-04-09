@@ -25,8 +25,9 @@ SECRET_KEY = 'lldtg$9(wi49j_hpv8nnqlh!cj7kmbwq0$rj7vy(b(b30vlyzj'
 # DEBUG = int(os.environ.get("DEBUG", default=0))
 DEBUG = False
 
-# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
+SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', False)
 
+# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
 print(ALLOWED_HOSTS)

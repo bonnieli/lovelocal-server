@@ -3,7 +3,7 @@ from django.db import models
 
 class Place(models.Model):
     yelp_id = models.TextField()
-    name = models.TextField()
+    name = models.TextField(db_index=True)
     image_url = models.URLField(blank=True)
     url = models.URLField(blank=True)
     phone = models.TextField(blank=True,
@@ -31,7 +31,7 @@ class Place(models.Model):
             'name': self.name,
             'giftCardURL': self.giftcard_url,
             'imageURL': self.image_url,
-            'placeID': self.place_id,
+            'placeID': self.yelp_id,
             'website': self.url
         }
 

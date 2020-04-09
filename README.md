@@ -6,9 +6,9 @@ This project was originally set out to help Toronto but can be expanded widely t
 
 To run the backend locally:
 
-- `python manage.py makemigrations`
-- `python manage.py migrate` to create the tables
-- `python scripts/load_businesses.py businesses.csv` to run scripts to populate the db
+- `pip install -r requirements.txt`
+- `python manage.py makemigrations` # this will create any migrations detected from your models in `models.py`
+- `python manage.py migrate` to create the tables. run this every time you do introduce any migrations as well
 - `python manage.py runserver`
 
 To run this client locally:
@@ -16,3 +16,16 @@ To run this client locally:
 - Go into `./client`
 - `npm install`
 - `npm start` : this should be running on `localhost:3000` and has proxy to port `8000`
+
+To deploy:
+
+- `cd client`
+- `PUBLIC_URL=[STATIC_URL] yarn build`
+- `cd ..`
+- `python manage.py collectstatic`
+- `gsutil rsync -R static gs://[GOOGLE_PROJECT_LINK]/static` #this uploads all your static folder to the cloud
+- `gcloud beta app deploy --project [GOOGLE_PROJECT_ID]`
+
+To populate the DB:
+
+- `python scripts/load_businesses.py` to run scripts to populate the db

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin, admindocs
 from django.urls import path
 from django.conf.urls import url, include
-from places.views import (test, neighborhood_detail, check_url,
+from places.views import (neighborhood_detail, featured_businesses, check_url,
                           FrontendAppView)
 
 admin.autodiscover()
@@ -24,7 +24,7 @@ admin.autodiscover()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/places/by_neighborhood', neighborhood_detail),
-    path('api/test', test),
+    path('api/places/featured_businesses', featured_businesses),
     path('url_checker', check_url),
 
     # Uncomment the admin/doc line below to enable admin documentation:

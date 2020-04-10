@@ -3,10 +3,13 @@ import React from "react";
 import { Typography, Row, Col } from "antd";
 
 import NeighborhoodCards from "./NeighborhoodCards";
+import FeaturedBusinesses from "./FeaturedBusinesses";
 
 const { Title } = Typography;
 
 const Main = () => {
+  const FORM_URL = process.env.REACT_APP_BUG_FORM_URL;
+
   return (
     <div style={{ marginTop: "0px" }}>
       <Row className="hero-row">
@@ -25,6 +28,13 @@ const Main = () => {
               that will help business owners stay afloat.
             </div>
           </Col>
+
+          <Col sm={{ span: 20, offset: 2 }}>
+            <div style={{ padding: 20 }}>
+              <FeaturedBusinesses />
+            </div>
+          </Col>
+
           <Col sm={{ span: 20, offset: 2 }}>
             <div className="main-results">
               <div className="neighborhood-card-container-outer">
@@ -42,6 +52,18 @@ const Main = () => {
                 Gift cards keep income flowing to local restaurateurs that are
                 having to pay rent and other expenses while businesses are
                 closed.
+              </p>
+
+              <p>
+                If you encounter any bugs, please report them using this form{" "}
+                <a
+                  href={`${FORM_URL}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+                . Thank you!
               </p>
             </Col>
           </Row>

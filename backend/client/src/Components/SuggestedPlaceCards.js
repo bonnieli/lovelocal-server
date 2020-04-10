@@ -89,7 +89,7 @@ const PlaceCard = ({ place }) => {
                 style={{ margin: `5px 10px`, color: "#00796f" }}
               >
                 <InstagramOutlined />
-                Shop
+                Instagram
               </Button>
             )}
           </div>

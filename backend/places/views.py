@@ -16,6 +16,7 @@ from django.conf import settings
 import logging
 import urllib.request
 import os
+import random
 
 # from django.contrib.gis.db.models.functions import Distance
 # from django.contrib.gis.measure import D
@@ -42,6 +43,15 @@ def neighborhood_detail(request):
         'suggestedPlaces': [x.to_json() for x in place_list],
         'moreAvailable': more_available
     })
+
+
+@csrf_protect
+def featured_businesses(request):
+    total_num_businesses = 126
+    random_num = random.randint(1, total_num_businesses)
+
+    place_list = Place.objects.all().exclude(url__exact='')[random_num: random_num + 1]
+    return JsonResponse({'featuredBusinesses': [x.to_json() for x in place_list]})
 
 
 @csrf_exempt

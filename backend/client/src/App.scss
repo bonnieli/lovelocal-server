@@ -659,6 +659,7 @@ div.header-sans {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    height: 120px;
+    min-height: 120px;
+    height: 100%;
   }
 }

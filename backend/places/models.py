@@ -18,7 +18,10 @@ class Place(models.Model):
     longitude = models.FloatField(blank=True, default=0)
     price = models.IntegerField(blank=True, default=0)
     giftcard_url = models.URLField(blank=True)
+    shop_url = models.URLField(blank=True)
     contact = models.TextField(blank=True)
+
+    ig_handle = models.TextField(blank=True, max_length=100)
 
     last_updated = models.DateTimeField()
     created_at = models.DateTimeField()
@@ -32,7 +35,9 @@ class Place(models.Model):
             'giftCardURL': self.giftcard_url,
             'imageURL': self.image_url,
             'placeID': self.yelp_id,
-            'website': self.url
+            'website': self.url,
+            'shopURL': self.shop_url,
+            'igHandle': self.ig_handle
         }
 
     def to_typeahead_json(self):

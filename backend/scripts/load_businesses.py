@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(__file__) + '/..')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'carebackend.settings'
 django.setup()
 
-from places.models import Place
+from places.models import Category, Place
 
 
 
@@ -73,6 +73,12 @@ for business in businesses:
         business_.ig_handle = instagram_handle
         business_.shop_url = shop_url
         business_.last_updated = updated
+
+        for category in business.get('categories'):
+            if category.get('title') and category.get('title') not in\
+                    business_.categories.values_list('name'):
+                business_.categories.create(name=category.get('title'))
+
         business_.save()
     except Place.DoesNotExist:
         print("does not exist", business)
@@ -95,4 +101,9 @@ for business in businesses:
                           shop_url=shop_url,
                           last_updated=updated,
                           created_at=updated)
+        business_.save()
+
+        for category in business.get('categories'):
+            if category.get('title'):
+                business_.categories.create(name=category.get('title'))
         business_.save()

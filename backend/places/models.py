@@ -1,6 +1,10 @@
 from django.db import models
 
 
+class Category(models.Model):
+    name = models.TextField(unique=True)
+
+
 class Place(models.Model):
     yelp_id = models.TextField()
     name = models.TextField(db_index=True)
@@ -25,6 +29,8 @@ class Place(models.Model):
 
     last_updated = models.DateTimeField()
     created_at = models.DateTimeField()
+
+    categories = models.ManyToManyField(Category)
 
     def get_image_url(self):
         return self.image or "http://TODO/placeholder"

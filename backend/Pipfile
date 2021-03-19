@@ -48,7 +48,7 @@ Werkzeug = "==1.0.1"
 beautifulsoup4 = "==4.8.2"
 colorama = "==0.4.3"
 django-rest-framework = "==0.1.0"
-djangorestframework = "==3.11.0"
+djangorestframework = "==3.11.2"
 soupsieve = "==2.0"
 
 [requires]
